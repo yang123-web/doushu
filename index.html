@@ -1,1 +1,70 @@
+// 使用SheetJS库生成Excel文件
 
+function generateStarCombinationsExcel() {
+  const wb = XLSX.utils.book_new();
+
+  // 同宫组合工作表
+  const sameHouseData = [
+    ['主星1', '主星2', '宫位', '组合特质', '吉凶分析', '实践建议'],
+    ['紫微', '天府', '同宫', '双贵格局，地位尊崇', '大吉，稳定发展', '善加利用贵人运'],
+    ['紫微', '武曲', '同宫', '财权双重，管理能力强', '偏吉，理财有道', '注意财务规划'],
+    ['紫微', '太阳', '同宫', '光明磊落，领导才能', '大吉，事业有成', '把握权力机遇'],
+    ['紫微', '天机', '同宫', '智慧超群，谋略过人', '吉，思维敏捷', '发挥智慧优势'],
+    ['紫微', '天同', '同宫', '重感情，善解人意', '偏吉，人缘佳', '避免优柔寡断'],
+    ['紫微', '廉贞', '同宫', '性格刚直，才华横溢', '中平，个性鲜明', '注意人际圆融'],
+    ['天府', '太阴', '同宫', '心思细腻，感知敏锐', '吉，善理财艺术', '平衡情理'],
+    ['天府', '武曲', '同宫', '财运双重，经商有道', '大吉，财运亨通', '稳健投资'],
+    ['天机', '巨门', '同宫', '口才极佳，思维敏捷', '吉，善言谈', '谨防口舌是非'],
+    ['七杀', '破军', '同宫', '权威显赫，魄力十足', '偏凶，竞争强', '降低锋芒']
+  ];
+
+  // 对宫组合工作表
+  const oppositeHouseData = [
+    ['主星1', '主星2', '宫位关系', '组合特质', '吉凶分析', '实践建议'],
+    ['紫微', '破军', '对宫', '事业起伏大，开创性强', '偏凶，波折多', '稳扎稳打'],
+    ['天府', '贪狼', '对宫', '财源广进，人际复杂', '中平，不稳定', '谨慎处事'],
+    ['武曲', '天相', '对宫', '财运与贵人相生', '吉，贵人助', '把握机遇'],
+    ['太阳', '太阴', '对宫', '阴阳调和，情理兼备', '大吉，均衡', '保持平衡']
+  ];
+
+  // 三合组合工作表
+  const tripleHouseData = [
+    ['主星1', '主星2', '主星3', '组合特质', '吉凶分析', '实践建议'],
+    ['文昌', '文曲', '左辅', '才华横溢，学识优秀', '大吉，利文书', '发展学术才能'],
+    ['天机', '巨门', '太阳', '智慧谋略，领导才能', '吉，利事业', '把握领导机会'],
+    ['七杀', '破军', '贪狼', '权威显赫，竞争激烈', '偏凶，需谨慎', '避免争端'],
+    ['武曲', '太阴', '天相', '财运亨通，贵人助', '大吉，利财运', '善用贵人相助']
+  ];
+
+  // 四正组合工作表
+  const fourCornersData = [
+    ['主星组合', '宫位关系', '组合特质', '吉凶分析', '实践建议'],
+    ['紫微+破军+七杀+贪狼', '四正', '权势显赫，争端多', '偏凶，需谨慎', '避免冲突'],
+    ['天府+武曲+太阴+天相', '四正', '财运亨通，贵人助', '大吉，利和谐', '平衡发展']
+  ];
+
+  // 将数据转换为工作表
+  const sameHouseWS = XLSX.utils.aoa_to_sheet(sameHouseData);
+  const oppositeHouseWS = XLSX.utils.aoa_to_sheet(oppositeHouseData);
+  const tripleHouseWS = XLSX.utils.aoa_to_sheet(tripleHouseData);
+  const fourCornersWS = XLSX.utils.aoa_to_sheet(fourCornersData);
+
+  // 添加工作表到工作簿
+  XLSX.utils.book_append_sheet(wb, sameHouseWS, "同宫组合");
+  XLSX.utils.book_append_sheet(wb, oppositeHouseWS, "对宫组合");
+  XLSX.utils.book_append_sheet(wb, tripleHouseWS, "三合组合");
+  XLSX.utils.book_append_sheet(wb, fourCornersWS, "四正组合");
+
+  // 设置列宽
+  const wscols = [{wch:10}, {wch:10}, {wch:12}, {wch:30}, {wch:15}, {wch:20}];
+  sameHouseWS['!cols'] = wscols;
+  oppositeHouseWS['!cols'] = wscols;
+  tripleHouseWS['!cols'] = wscols;
+  fourCornersWS['!cols'] = wscols;
+
+  // 输出Excel文件
+  XLSX.writeFile(wb, "紫微斗数主星组合对照表.xlsx");
+}
+
+// 运行生成函数
+generateStarCombinationsExcel();
